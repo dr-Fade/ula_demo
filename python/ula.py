@@ -34,7 +34,6 @@ class ULA:
             rms(self.delay_and_sum(steered_signal, θ))
             for θ in Θ
         ])
-        np.power
 
         return (Θ, p)
 
