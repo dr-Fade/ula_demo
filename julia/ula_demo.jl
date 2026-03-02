@@ -257,18 +257,18 @@ begin
     N_time = Int(sampling_rate * pulse_duration)
     t = range(0, step=1/sampling_rate, length=N_time)
     
-    # generate signal
-    signal = exp.(2im * π * f * 1e6 * t)
-    
     # noise
     snr = 10^(snr_db/10)
+    
+    # generate signal
+    signal = add_noise(exp.(2im * π * f * 1e6 * t), snr/2)
     
     # convert DOA to radians
     θ = deg2rad(doa)
     
     # steer signal
     steered_signal = hcat([
-		add_noise(steered_signal, snr)
+		add_noise(steered_signal, snr/ula.N)
 		for steered_signal in eachcol(steer_signal(ula, signal, θ))
 	]...)
     
@@ -1506,7 +1506,7 @@ version = "1.9.2+0"
 # ╟─b0d6036a-cef3-4c16-a73d-536597725992
 # ╟─748202d5-94a3-4856-ba1d-95e020db5aae
 # ╟─41146067-9289-41f6-8bcb-2b5c342ab024
-# ╟─ee00077f-a023-49df-98a5-8c87901c1ee2
+# ╠═ee00077f-a023-49df-98a5-8c87901c1ee2
 # ╠═908fb298-326a-4155-b3b4-e3a90f065348
 # ╠═2ba7b736-04d9-4856-8661-564e93b6e7d7
 # ╠═11e9c17d-f42d-4b0c-b3fb-7622c1eb7ea4
